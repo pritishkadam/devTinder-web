@@ -17,7 +17,7 @@ const SignUpButton = (props) => {
     <>
       <button
         className={
-          'btn btn-wide sm:w-56 rounded-full text-xl font-bold text-black bg-white hover:bg-white'
+          'btn w-32 text-base sm:w-56 rounded-full sm:text-xl font-bold text-black bg-white hover:bg-white'
         }
         onClick={() => {
           openModal();

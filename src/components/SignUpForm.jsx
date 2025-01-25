@@ -1,12 +1,28 @@
 import { useState } from 'react';
 import skillSet from '../enums/skills';
+import axios from 'axios';
+import { BASE_URL } from '../utils/constants';
+import { saveUser } from '../store/userSlice';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const SignUpForm = (props) => {
   const { closeModal } = props;
 
-  const [step, setStep] = useState(4);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const API_URL = `${BASE_URL}/auth/signup`;
+
+  const [step, setStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [response, setResponse] = useState({
+    fetching: false,
+    error: false,
+    errorMessage: undefined,
+    data: undefined,
+  });
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -23,8 +39,48 @@ const SignUpForm = (props) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const handleSubmit = () => {
-    console.log('Reached Here');
+  const handleSubmit = async (e) => {
+    console.log('Reached Here: ', formData);
+    e.preventDefault();
+    setResponse({
+      fetching: true,
+      error: false,
+      errorMessage: undefined,
+      data: undefined,
+    });
+    try {
+      const form = new FormData();
+      const formKeys = Object.keys(formData);
+      formKeys.map((key) => {
+        form.append([key], formData[key]);
+      });
+      const { error, data } = await axios.post(API_URL, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
+      });
+
+      const {
+        error: dataError,
+        errorMessage: dataErrorMessage,
+        data: responseData,
+      } = data ? data : {};
+
+      if (error || dataError) {
+        throw new Error(dataErrorMessage);
+      }
+      dispatch(saveUser(responseData));
+      closeModal();
+      navigate('/explore');
+    } catch (e) {
+      setResponse({
+        fetching: false,
+        error: true,
+        errorMessage: 'Something went wrong! Try again later...',
+        data: undefined,
+      });
+    }
   };
 
   const onPrevious = () => {
@@ -55,6 +111,13 @@ const SignUpForm = (props) => {
     setFormData({
       ...formData,
       [name]: value,
+    });
+  };
+
+  const handleFileChange = (e) => {
+    setFormData({
+      ...formData,
+      photoUrl: e.target.files[0],
     });
   };
 
@@ -254,10 +317,7 @@ const SignUpForm = (props) => {
                     <span
                       key={index}
                       className={
-                        'p-1 rounded-full bg-slate-400 cursor-pointer' +
-                        formData.skills.includes(element)
-                          ? 'p-1 rounded-full cursor-pointer bg-slate-600'
-                          : 'p-1 rounded-full cursor-pointer bg-slate-600'
+                        'p-1 px-2 rounded-full bg-slate-500 cursor-pointer'
                       }
                       onClick={() => handleSkillsSelection(element)}
                     >
@@ -283,6 +343,7 @@ const SignUpForm = (props) => {
                 placeholder='Bio'
                 name='about'
                 value={formData.about}
+                onChange={handleFormChange}
               >
                 {formData.about}
               </textarea>
@@ -293,7 +354,12 @@ const SignUpForm = (props) => {
               </div>
             </label>
             <label className='form-control w-full max-w-xs mx-auto'>
-              <input type='file' />
+              <input
+                type='file'
+                name='photoUrl'
+                onChange={handleFileChange}
+                required
+              />
             </label>
           </div>
         )}
@@ -306,8 +372,6 @@ const SignUpForm = (props) => {
         >
           ❮ Previous
         </button>
-        {/* Button for confirm action */}
-
         <button
           className='bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700'
           onClick={step === 4 ? handleSubmit : onNext}

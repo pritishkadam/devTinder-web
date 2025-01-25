@@ -54,8 +54,6 @@ const LoginForm = (props) => {
         data: responseData,
       } = data ? data : {};
 
-      console.log('dataErrorMessage: ', dataErrorMessage);
-      console.log('errorMessage: ', errorMessage);
       if (error || dataError) {
         throw new Error(errorMessage);
       }

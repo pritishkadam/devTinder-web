@@ -41,7 +41,7 @@ const FeedCard = (props) => {
               onClick={() => {
                 expandProfile(profile);
               }}
-              className='w-8 h-8 rounded-full bg-black hover:scale-110 my-auto px-1'
+              className='w-8 h-8 rounded-full bg-base-200 hover:scale-110 my-auto px-1'
             >
               <img src={up} className='w-8' />
             </button>

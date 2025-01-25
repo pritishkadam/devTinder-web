@@ -11,7 +11,7 @@ const GuestView = () => {
         <div className='w-full h-screen absolute top-0 z-0 bg-blackOverlay'>
           <div className='w-full h-screen flex justify-center items-center'>
             <div>
-              <h1 className='sm:mx-4 sm:text-white text-5xl md:text-7xl lg:text-8xl font-bold'>
+              <h1 className='text-5xl mx-4 sm:text-white sm:text-5xl md:text-7xl lg:text-8xl font-bold'>
                 Start something epic.
                 <h2 className='text-2xl  sm:text-white sm:text-2xl md:text-xl lg:text-2xl font-semibold'>
                   Connect with fellow devs!

@@ -8,6 +8,7 @@ import { BASE_URL } from '../utils/constants';
 import FeedCardSkeleton from './FeedCardSkeleton';
 import FeedCardError from './FeedCardError';
 import AlertComponent from './AlertComponent';
+import EmptyFeedCard from './EmptyFeedCard';
 
 const buttonAction = {
   INTERESTED: 'interested',
@@ -16,7 +17,7 @@ const buttonAction = {
 };
 
 const Explore = () => {
-  const [actionError, setActionError] = useState('Sample Text');
+  const [errorMessage, setErrorMessage] = useState('Sample Text');
   const [profileList, setProfileList] = useState({
     fetching: false,
     error: false,
@@ -66,6 +67,15 @@ const Explore = () => {
     return profileList.data;
   };
 
+  const updatedProfiles = (userId) => {
+    if (profileList.data) {
+      const { data } = profileList;
+      const updatedData = data.filter((profile) => profile._id !== userId);
+      return updatedData;
+    }
+    return profileList.data;
+  };
+
   const updateConnectionRequest = async (userId, action) => {
     try {
       const API_URL = `${BASE_URL}/request/send/${action}/${userId}`;
@@ -75,18 +85,25 @@ const Explore = () => {
       if (error || data.error) {
         throw new Error(data.errorMessage);
       }
+      const newProfileList = updatedProfiles(userId);
+      console.log('NewProfileList: ', newProfileList);
+      setProfileList({
+        fetching: false,
+        error: false,
+        data: [...newProfileList],
+      });
     } catch (error) {
-      setActionError('Something went wrong! Try again in sometime.');
+      setErrorMessage('Something went wrong! Try again in sometime.');
     }
   };
 
   useEffect(() => {
-    if (actionError) {
+    if (errorMessage) {
       setTimeout(() => {
-        setActionError('');
+        setErrorMessage('');
       }, [3000]);
     }
-  }, [actionError]);
+  }, [errorMessage]);
 
   const handleAction = (userId, action) => {
     if (action) {
@@ -103,8 +120,6 @@ const Explore = () => {
       }
     }
   };
-
-  const handleAlert = () => setActionError('')
 
   return (
     <>
@@ -146,13 +161,20 @@ const Explore = () => {
             </div>
           </div>
         ))}
+      {profileList.data && profileList.data.length === 0 && (
+        <div className='w-full h-screen relative mx-auto flex justify-center overflow-y-scroll'>
+          <EmptyFeedCard />
+        </div>
+      )}
       {profileList.error && (
         <div className='w-full h-screen relative mx-auto flex justify-center overflow-y-scroll'>
           <FeedCardError />
         </div>
       )}
       {profileList.fetching && <FeedCardSkeleton />}
-      {actionError && <AlertComponent actionError={actionError} handleAlert={handleAlert} />}
+      {errorMessage && (
+        <AlertComponent message={errorMessage} alertType={'error'} />
+      )}
     </>
   );
 };
