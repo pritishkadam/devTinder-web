@@ -17,8 +17,6 @@ const DetailedFeedCard = () => {
     data: undefined,
   });
 
-  console.log('profileID: ', profileId);
-
   const API_URL = `${BASE_URL}/user/profile/${profileId}`;
   const fetchUserDetails = async () => {
     try {
@@ -62,7 +60,7 @@ const DetailedFeedCard = () => {
             <div className='w-full h-20 bg-base-300 text-white flex justify-between py-2 px-4 sticky top-0'>
               <p className='text-4xl font-bold my-2'>
                 {userDetails.data.firstName}{' '}
-                <span className='text-3xl font-semibold'>29</span>
+                <span className='text-3xl font-semibold'>{userDetails.data.age}</span>
               </p>
               <Link
                 to={`/explore`}

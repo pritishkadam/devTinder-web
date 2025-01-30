@@ -16,7 +16,6 @@ const Profile = () => {
       : `${about.toString().substring(0, 150)} ...;`;
 
   const expandProfile = (profile) => {
-    console.log('reached expandProfile: ', profile);
     dispatch(saveProfileDetails(profile));
     navigate(`/profileDetails/${_id}`);
   };

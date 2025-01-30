@@ -16,7 +16,6 @@ const FeedCard = (props) => {
       : `${about.toString().substring(0, 150)} ...;`;
 
   const expandProfile = (profile) => {
-    console.log('reached expandProfile: ', profile);
     dispatch(saveProfileDetails(profile));
     navigate(`/explore/profile/${_id}`);
   };

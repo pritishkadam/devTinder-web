@@ -33,6 +33,7 @@ const SignUpForm = (props) => {
     gender: '',
     photoUrl: '',
     about: '',
+    role: '',
     skills: [],
   });
 
@@ -40,7 +41,6 @@ const SignUpForm = (props) => {
   const [passwordError, setPasswordError] = useState('');
 
   const handleSubmit = async (e) => {
-    console.log('Reached Here: ', formData);
     e.preventDefault();
     setResponse({
       fetching: true,
@@ -294,8 +294,21 @@ const SignUpForm = (props) => {
           <div className='w-4/5 mx-auto py-2'>
             <label className='form-control w-full max-w-xs mx-auto'>
               <div className='label'>
-                <span className='label-text'>3. Skills / Interested in: </span>
+                <span className='label-text'>3. Experience: </span>
               </div>
+            </label>
+            <label className='form-control w-full max-w-xs mx-auto'>
+              <div className='label'>
+                <span className='label-text'>Role</span>
+              </div>
+              <input
+                type='text'
+                placeholder='Enter your current role'
+                name='role'
+                value={formData.role}
+                onChange={handleFormChange}
+                className='input input-bordered w-full max-w-xs'
+              />
             </label>
             <label className='form-control w-full max-w-xs mx-auto'>
               <div className='label'>

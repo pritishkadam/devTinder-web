@@ -1,4 +1,7 @@
+import { useParams } from 'react-router-dom';
+
 const Message = () => {
+  const { userId } = useParams();
   return (
     <div>
       <div className='chat chat-start'>

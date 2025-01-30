@@ -31,7 +31,6 @@ const LoginButton = () => {
   }
 
   const handleSubmit = (e) => {
-    console.log('HandleSubmit called');
     e.preventDefault();
     startLogin();
   };

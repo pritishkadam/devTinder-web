@@ -61,7 +61,6 @@ const LoginForm = (props) => {
       closeModal();
       navigate('/explore');
     } catch (e) {
-      console.log('error: ', e);
       const message =
         e.message && e.message.includes('Invalid Credentials')
           ? e.message
