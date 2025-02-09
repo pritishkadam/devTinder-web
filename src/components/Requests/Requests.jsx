@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { BASE_URL } from '../utils/constants';
+import { BASE_URL } from '../../utils/constants';
 import axios from 'axios';
-import defaultUserIcon from './../assets/defaultUserIcon.png';
-import accept from './../assets/accept.png';
-import cross from './../assets/cross.png';
-import timeSince from '../utils/timeSince';
+import defaultUserIcon from './../../assets/defaultUserIcon.png';
+import accept from './../../assets/accept.png';
+import cross from './../../assets/cross.png';
+import timeSince from '../../utils/timeSince';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addRequestData, removeRequestData } from '../store/requestSlice';
-import AlertComponent from './AlertComponent';
-import { alertTypes } from '../enums/alerts';
-import { addConnection } from '../store/connectionSlice';
+import { addRequestData, removeRequestData } from '../../store/requestSlice';
+import AlertComponent from '../AlertComponent';
+import { alertTypes } from '../../enums/alerts';
+import { addConnection } from '../../store/connectionSlice';
 
 const buttonAction = {
   ACCEPT: 'accepted',
@@ -96,7 +96,7 @@ const Requests = () => {
   }, [alert]);
 
   return (
-    <div className='my-2 py-2'>
+    <div className='my-5 sm:my-2 py-2'>
       {userData &&
         userData.map((match) => (
           <div

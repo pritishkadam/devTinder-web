@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import useAuthenticate from './useAuthenticateUser';
-import { saveUser } from '../store/userSlice';
+import { saveUser } from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { BASE_URL } from '../utils/constants';
+import { BASE_URL } from '../../utils/constants';
 import axios from 'axios';
 
 const LoginForm = (props) => {

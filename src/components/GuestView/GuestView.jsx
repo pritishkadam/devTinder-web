@@ -1,6 +1,6 @@
 import Footer from '../../Footer';
 import NavBar from './GuestNavBar';
-import AuthButton from '../AuthButton';
+import AuthButton from '../User/AuthButton';
 import ReviewList from './ReviewList';
 
 const GuestView = () => {

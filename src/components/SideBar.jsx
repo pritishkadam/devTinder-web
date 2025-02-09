@@ -1,5 +1,5 @@
-import MatchList from './MatchList';
-import Messages from './Messages';
+import MatchList from './Matches/MatchList';
+import Messages from './Messages/Messages';
 import { useDispatch, useSelector } from 'react-redux';
 import defaultUserIcon from './../assets/defaultUserIcon.png';
 import messageIcon from './../assets/message.png';
@@ -11,7 +11,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../utils/constants';
 import axios from 'axios';
 import { removeUser } from '../store/userSlice';
-import Requests from './Requests';
+import Requests from './Requests/Requests';
 
 const SideBar = () => {
   const userData = useSelector((store) => store.user.userDetails);
@@ -90,10 +90,7 @@ const SideBar = () => {
             </button>
           </div>
         </header>
-        <div
-          role='tablist'
-          className='tabs tabs-bordered pt-3 relative z-0'
-        >
+        <div role='tablist' className='tabs tabs-bordered pt-3 relative z-0'>
           <input
             type='radio'
             name='my_tabs_1'
@@ -183,7 +180,7 @@ const SideBar = () => {
           <img
             alt='messages'
             src={messageIcon}
-            className='w-full rounded-full'
+            className='w-8 mx-1 my-1 rounded-full'
             onError={({ currentTarget }) => {
               currentTarget.onerror = null;
               currentTarget.src = defaultUserIcon;

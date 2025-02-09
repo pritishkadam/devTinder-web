@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { BASE_URL } from '../utils/constants';
-import defaultUserIcon from './../assets/defaultUserIcon.png';
-import message from './../assets/message.png';
+import { BASE_URL } from '../../utils/constants';
+import defaultUserIcon from './../../assets/defaultUserIcon.png';
+import message from './../../assets/message.png';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,6 +31,7 @@ const MatchList = () => {
       if (error || data.error) {
         throw new Error(data.errorMessage);
       }
+      console.log('Data: ', data);
       setMatches({ fetching: false, error: false, data: data.data });
     } catch (e) {
       setMatches({
@@ -69,6 +70,18 @@ const MatchList = () => {
 
   return (
     <div className='my-2 py-2'>
+      {matches.data && matches.data.length === 0 && (
+        <div>
+          <div className='w-32 h-40 mx-auto my-4 rounded-xl bg-gradient-to-tr from-[#fd267a] to-[#ff6036]' />
+          <p className='h-96 mx-auto text-center'>
+            <p className='text-3xl font-semibold my-4'>Start Matching!</p>
+            <p className='w-64 text-xl mx-auto'>
+              Matches will start appearing here once the connection request is
+              accepted from either side!
+            </p>
+          </p>
+        </div>
+      )}
       {matches.data &&
         matches.data.map((match) => (
           <div
@@ -99,7 +112,7 @@ const MatchList = () => {
               </div>
               <div className='flex justify-center items-center'>
                 <button
-                  className='w-10 h-10 border border-slate-700 rounded-full bg-slate-800 text-white hover:scale-125 hover:bg-base-200 hover:text-white'
+                  className='w-10 h-10 border border-slate-600 rounded-full bg-slate-400 text-white hover:scale-125 hover:bg-base-200 hover:text-white'
                   title='Message'
                   onClick={(e) => {
                     e.stopPropagation();
@@ -112,18 +125,7 @@ const MatchList = () => {
             </div>
           </div>
         ))}
-      {matches.data && matches.data.length === 0 && (
-        <div>
-          <div className='w-32 h-40 mx-auto my-4 rounded-xl bg-gradient-to-tr from-[#fd267a] to-[#ff6036]' />
-          <p className='h-96 mx-auto text-center'>
-            <p className='text-3xl font-semibold my-4'>Start Matching!</p>
-            <p className='w-64 text-xl mx-auto'>
-              Matches will start appearing here once the connection request is
-              accepted from either side!
-            </p>
-          </p>
-        </div>
-      )}
+
       {matches.error && (
         <div>
           <p className='h-96 mx-auto text-center'>

@@ -1,16 +1,16 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Body from './Body';
 import Profile from './components/User/Profile';
-import Message from './components/Message';
+import Message from './components/Messages/Message';
 import { Provider } from 'react-redux';
 import store from './store/store';
-import Explore from './components/Explore';
-import DetailedFeedCard from './components/DetailedFeedCard';
+import Explore from './components/Explore/Explore';
+import DetailedFeedCard from './components/Explore/DetailedFeedCard';
 import ProfileDetails from './components/User/ProfileDetails';
-import Requests from './components/Requests';
-import RequestDetails from './components/RequestDetails';
-import MatchDetails from './components/MatchDetails';
-import MatchList from './components/MatchList';
+import Requests from './components/Requests/Requests';
+import RequestDetails from './components/Requests/RequestDetails';
+import MatchDetails from './components/Matches/MatchDetails';
+import MatchList from './components/Matches/MatchList';
 
 function App() {
   return (
@@ -30,7 +30,14 @@ function App() {
                 path='/profileDetails/:profileId'
                 element={<ProfileDetails />}
               />
-              <Route path='/requests' element={<Requests />} />
+              <Route
+                path='/requests'
+                element={
+                  <div className='block md:hidden'>
+                    <Requests />
+                  </div>
+                }
+              />
               <Route path='/requests/:userId' element={<RequestDetails />} />
               <Route path='/matches' element={<MatchList />} />
               <Route path='/matches/:userId' element={<MatchDetails />} />

@@ -1,12 +1,12 @@
-import down from './../assets/down.png';
-import defaultUserIcon from './../assets/defaultUserIcon.png';
+import down from './../../assets/down.png';
+import defaultUserIcon from './../../assets/defaultUserIcon.png';
 import { Link, useParams } from 'react-router-dom';
-import accept from './../assets/accept.png';
-import cross from './../assets/cross.png';
-import refresh from './../assets/refreshIcon.png';
+import accept from './../../assets/accept.png';
+import cross from './../../assets/cross.png';
+import refresh from './../../assets/refreshIcon.png';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { BASE_URL } from '../utils/constants';
+import { BASE_URL } from '../../utils/constants';
 
 const DetailedFeedCard = () => {
   const { profileId } = useParams();
@@ -60,7 +60,9 @@ const DetailedFeedCard = () => {
             <div className='w-full h-20 bg-base-300 text-white flex justify-between py-2 px-4 sticky top-0'>
               <p className='text-4xl font-bold my-2'>
                 {userDetails.data.firstName}{' '}
-                <span className='text-3xl font-semibold'>{userDetails.data.age}</span>
+                <span className='text-3xl font-semibold'>
+                  {userDetails.data.age}
+                </span>
               </p>
               <Link
                 to={`/explore`}
@@ -75,6 +77,7 @@ const DetailedFeedCard = () => {
                   src={userDetails.data.photoUrl}
                   className='h-full'
                   onError={({ currentTarget }) => {
+                    console.log('CurrentTarget: ', currentTarget);
                     currentTarget.onerror = null;
                     currentTarget.src = defaultUserIcon;
                   }}

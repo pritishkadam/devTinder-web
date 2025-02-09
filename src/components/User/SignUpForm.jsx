@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import skillSet from '../enums/skills';
+import skillSet from '../../enums/skills';
 import axios from 'axios';
-import { BASE_URL } from '../utils/constants';
-import { saveUser } from '../store/userSlice';
+import { BASE_URL } from '../../utils/constants';
+import { saveUser } from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 

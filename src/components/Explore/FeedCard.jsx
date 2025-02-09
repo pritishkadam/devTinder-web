@@ -1,8 +1,8 @@
-import up from './../assets/up.png';
-import defaultUserIcon from './../assets/defaultUserIcon.png';
+import up from './../../assets/up.png';
+import defaultUserIcon from './../../assets/defaultUserIcon.png';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { saveProfileDetails } from '../store/profileSlice';
+import { saveProfileDetails } from '../../store/profileSlice';
 
 const FeedCard = (props) => {
   const { profile } = props;

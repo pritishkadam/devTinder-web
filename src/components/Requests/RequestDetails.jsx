@@ -1,13 +1,13 @@
-import defaultUserIcon from './../assets/defaultUserIcon.png';
-import accept from './../assets/accept.png';
-import cross from './../assets/cross.png';
+import defaultUserIcon from './../../assets/defaultUserIcon.png';
+import accept from './../../assets/accept.png';
+import cross from './../../assets/cross.png';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { BASE_URL } from './../utils/constants';
-import FeedCardSkeleton from './FeedCardSkeleton';
-import FeedCardError from './FeedCardError';
-import EmptyFeedCard from './EmptyFeedCard';
+import { BASE_URL } from '../../utils/constants';
+import FeedCardSkeleton from '../Explore/FeedCardSkeleton';
+import FeedCardError from '../Explore/FeedCardError';
+import EmptyFeedCard from '../Explore/EmptyFeedCard';
 import { useSelector } from 'react-redux';
 
 const buttonAction = {
@@ -102,7 +102,9 @@ const RequestDetails = () => {
             <div className='w-full h-20 bg-base-300 text-white flex justify-between py-2 px-4 sticky top-0'>
               <p className='text-4xl font-bold my-2'>
                 {userDetails.data.firstName}{' '}
-                <span className='text-3xl font-semibold'>{userDetails.data.age}</span>
+                <span className='text-3xl font-semibold'>
+                  {userDetails.data.age}
+                </span>
               </p>
             </div>
             <div className='w-full h-auto bg-black pb-20'>

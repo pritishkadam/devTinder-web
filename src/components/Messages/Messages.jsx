@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { BASE_URL } from '../utils/constants';
-import defaultUserIcon from './../assets/defaultUserIcon.png';
-import conversationIcon from './../assets/conversation.png';
+import { BASE_URL } from '../../utils/constants';
+import defaultUserIcon from './../../assets/defaultUserIcon.png';
+import conversationIcon from './../../assets/conversation.png';
 
 const Messages = () => {
   const [messages, setMessages] = useState({
@@ -61,7 +61,7 @@ const Messages = () => {
             <h2 className='absolute bottom-2 mx-1'>{message.firstName}</h2>
           </div>
         ))}
-      {(messages.data !== undefined) && (messages?.data?.length === 0) && (
+      {messages.data !== undefined && messages?.data?.length === 0 && (
         <div>
           <img src={conversationIcon} className='w-40 h-40 mx-auto my-4' />
           <p className='h-96 mx-auto text-center'>

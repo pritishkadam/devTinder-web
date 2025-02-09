@@ -1,4 +1,4 @@
-import fetchError from './../assets/fetchDataError.png';
+import fetchError from './../../assets/fetchDataError.png';
 
 const FeedCardError = () => {
   return (

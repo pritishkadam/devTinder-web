@@ -1,4 +1,4 @@
-import AuthButton from './../AuthButton';
+import AuthButton from '../User/AuthButton';
 
 const GuestNavBar = () => {
   return (
@@ -8,9 +8,7 @@ const GuestNavBar = () => {
           <div className='w-10 rounded-full'>
             <img alt='DevTinder Logo' src={'/guestViewIcon.png'} />
           </div>
-          <span className='ml-1 font-bold text-2xl'>
-            devTinder
-          </span>
+          <span className='ml-1 font-bold text-2xl'>devTinder</span>
         </a>
       </div>
 

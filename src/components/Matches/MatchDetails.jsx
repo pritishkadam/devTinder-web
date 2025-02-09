@@ -1,11 +1,11 @@
-import defaultUserIcon from './../assets/defaultUserIcon.png';
+import defaultUserIcon from './../../assets/defaultUserIcon.png';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { BASE_URL } from './../utils/constants';
-import FeedCardSkeleton from './FeedCardSkeleton';
-import FeedCardError from './FeedCardError';
-import EmptyFeedCard from './EmptyFeedCard';
+import { BASE_URL } from '../../utils/constants';
+import FeedCardSkeleton from '../Explore/FeedCardSkeleton';
+import FeedCardError from '../Explore/FeedCardError';
+import EmptyFeedCard from '../Explore/EmptyFeedCard';
 
 const buttonAction = {
   ACCEPT: 'accepted',
