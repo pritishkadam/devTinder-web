@@ -16,9 +16,13 @@ const SignUpButton = (props) => {
   return (
     <>
       <button
-        className={
-          'btn w-32 text-base sm:w-56 rounded-full sm:text-xl font-bold text-black bg-white hover:bg-white'
-        }
+        className={`btn h-10 px-6 text-base rounded-full sm:text-lg font-bold text-black border-none bg-white hover:bg-white
+            ${
+              buttonType === 'register'
+                ? ' bg-gradient-to-tr from-[#fd267a] to-[#ff6036] text-white'
+                : ''
+            }
+        `}
         onClick={() => {
           openModal();
         }}
@@ -28,11 +32,11 @@ const SignUpButton = (props) => {
 
       {openDialog && (
         <div
-          className='fixed inset-0 bg-slate-900 bg-opacity-50 flex justify-center items-center z-40'
+          className='fixed inset-0 bg-slate-900 bg-opacity-50 flex justify-center items-center z-10'
           onClick={closeModal}
         >
           <div
-            className='bg-gray-900 rounded-lg shadow-lg w-[30rem] p-6 space-y-4 text-center relative'
+            className='relative top-8 bg-gray-900 rounded-lg shadow-lg w-[30rem] overflow-scroll p-6 space-y-4 text-center'
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -43,7 +47,7 @@ const SignUpButton = (props) => {
             </button>
 
             {modalType === 'register' && (
-              <>
+              <div className=''>
                 <SignUpForm closeModal={closeModal} />
                 <p
                   className='my-2 pt-2 hover:cursor-pointer hover:text-slate-300 border-t-2 border-slate-500'
@@ -53,7 +57,7 @@ const SignUpButton = (props) => {
                 >
                   Already Registered? Try to Login
                 </p>
-              </>
+              </div>
             )}
             {modalType === 'login' && (
               <>

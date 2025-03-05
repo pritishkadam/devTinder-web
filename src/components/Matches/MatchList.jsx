@@ -31,7 +31,6 @@ const MatchList = () => {
       if (error || data.error) {
         throw new Error(data.errorMessage);
       }
-      console.log('Data: ', data);
       setMatches({ fetching: false, error: false, data: data.data });
     } catch (e) {
       setMatches({
@@ -64,18 +63,18 @@ const MatchList = () => {
 
   const handleMessageRedirect = (userId) => {
     if (userId) {
-      navigate('/message/' + userId);
+      navigate('/messages/' + userId);
     }
   };
 
   return (
-    <div className='my-2 py-2'>
+    <div className='my-2 py-2 mx-1'>
       {matches.data && matches.data.length === 0 && (
         <div>
           <div className='w-32 h-40 mx-auto my-4 rounded-xl bg-gradient-to-tr from-[#fd267a] to-[#ff6036]' />
           <p className='h-96 mx-auto text-center'>
-            <p className='text-3xl font-semibold my-4'>Start Matching!</p>
-            <p className='w-64 text-xl mx-auto'>
+            <p className='text-2xl font-semibold my-4'>Start Matching!</p>
+            <p className='w-64 text-base mx-auto text-slate-400'>
               Matches will start appearing here once the connection request is
               accepted from either side!
             </p>
@@ -87,24 +86,24 @@ const MatchList = () => {
           <div
             key={match._id}
             onClick={() => handleRedirect(match._id)}
-            className='w-full h-24 px-2 border-2 border-slate-800 cursor-pointer rounded-xl relative mb-2 flex items-center bg-base-300'
+            className='w-full h-20 px-2 border-2 border-slate-800 cursor-pointer rounded-xl relative mb-2 flex items-center bg-base-300'
           >
             <img
               src={match.photoUrl}
-              className='w-20 h-20 rounded-full border border-slate-800'
+              className='w-14 h-14 rounded-full border border-slate-800'
               onError={({ currentTarget }) => {
                 currentTarget.onerror = null;
                 currentTarget.src = defaultUserIcon;
               }}
             />
-            <div className='w-full h-full py-2 mx-2 flex gap-2 justify-between'>
-              <div className='w-48 flex flex-col'>
-                <h2 className='text-xl'>
+            <div className='w-full h-full mx-2 flex gap-2 justify-between'>
+              <div className='w-3/4 flex flex-col justify-center'>
+                <h2 className='text-base'>
                   <span className='font-semibold'>
                     {match.firstName}, {match.age}
                   </span>
                 </h2>
-                <p>
+                <p className='text-xs'>
                   {match.about && match.about.length <= 50
                     ? match.about
                     : match.about.substring(0, 50) + ' ...'}
@@ -112,7 +111,7 @@ const MatchList = () => {
               </div>
               <div className='flex justify-center items-center'>
                 <button
-                  className='w-10 h-10 border border-slate-600 rounded-full bg-slate-400 text-white hover:scale-125 hover:bg-base-200 hover:text-white'
+                  className='w-8 h-8 border border-slate-600 rounded-full bg-slate-400 text-white hover:scale-125 hover:bg-slate-300 hover:text-white'
                   title='Message'
                   onClick={(e) => {
                     e.stopPropagation();

@@ -115,33 +115,33 @@ const Explore = () => {
         {feed && feed.length !== 0 && (
           <>
             <FeedCard profile={feed[0]} />
-            <div className='w-96 h-auto fixed bottom-20 sm:bottom-10 flex justify-around items-center'>
+            <div className='w-96 h-auto fixed bottom-16 sm:bottom-10 flex justify-around items-center'>
               <button
-                className='w-20 h-20 border border-slate-700 rounded-full bg-base-100 text-white hover:scale-125 hover:bg-base-200 hover:text-white'
+                className='w-16 h-16 border border-slate-700 rounded-full bg-base-100 text-white hover:scale-125 hover:bg-base-200 hover:text-white'
                 title='Pass'
                 onClick={() => {
                   handleAction(feed[0]._id, buttonAction.IGNORED);
                 }}
               >
-                <img src={cross} className='w-10 mx-auto' />
+                <img src={cross} className='w-8 mx-auto' />
               </button>
               <button
-                className='w-16 h-16 border border-slate-700 rounded-full bg-base-100 text-white hover:scale-125 hover:bg-base-200 hover:text-white'
+                className='w-14 h-14 border border-slate-700 rounded-full bg-base-100 text-white hover:scale-125 hover:bg-base-200 hover:text-white'
                 title='Refresh'
                 onClick={() => {
                   handleAction(feed[0]._id, buttonAction.REFRESH);
                 }}
               >
-                <img src={refresh} className='w-10 mx-auto p-1' />
+                <img src={refresh} className='w-8 mx-auto p-1' />
               </button>
               <button
-                className='w-20 h-20 border border-slate-700 rounded-full bg-base-100 text-white hover:scale-125 hover:bg-base-200 hover:text-white'
+                className='w-16 h-16 border border-slate-700 rounded-full bg-base-100 text-white hover:scale-125 hover:bg-base-200 hover:text-white'
                 title='Send Request'
                 onClick={() => {
                   handleAction(feed[0]._id, buttonAction.INTERESTED);
                 }}
               >
-                <img src={accept} className='w-10 mx-auto' />
+                <img src={accept} className='w-8 mx-auto' />
               </button>
             </div>
           </>

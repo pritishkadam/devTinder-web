@@ -22,7 +22,7 @@ const Profile = () => {
 
   return (
     <div className='w-full h-screen relative mx-auto flex justify-center overflow-y-scroll'>
-      <div className='w-[26rem] h-[82vh] sm:h-[90vh] rounded-2xl bg-black drop-shadow-2xl shadow-lg shadow-indigo-300/40'>
+      <div className='w-[22rem] h-[85vh] sm:h-[90vh] rounded-2xl bg-black drop-shadow-2xl shadow-lg shadow-indigo-300/40'>
         <div className='relative rounded-2xl rounded-b-none bg-base-300 h-[85%] '>
           <img
             src={photoUrl}
@@ -41,9 +41,9 @@ const Profile = () => {
                 onClick={() => {
                   expandProfile(userData);
                 }}
-                className='w-8 h-8 rounded-full bg-black hover:scale-110 my-auto px-1'
+                className='w-8 h-8 rounded-full border border-white bg-black hover:scale-110 my-auto p-1'
               >
-                <img src={up} className='w-8' />
+                <img src={up} className='w-8 object-contain' />
               </button>
             </div>
             {aboutMe && (

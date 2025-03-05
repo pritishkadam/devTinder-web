@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { BASE_URL } from '../../utils/constants';
 import axios from 'axios';
+import { createSocketConnection } from '../../utils/socket';
 
 const LoginForm = (props) => {
   const { closeModal } = props;
@@ -95,6 +96,11 @@ const LoginForm = (props) => {
               name='emailID'
               value={credentials.emailID}
               onChange={handleFormChange}
+              onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSubmit();
+              }
+            }}
             />
           </label>
 
@@ -118,6 +124,11 @@ const LoginForm = (props) => {
               name='password'
               value={credentials.password}
               onChange={handleFormChange}
+              onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSubmit();
+              }
+            }}
             />
           </label>
           {response.errorMessage && (

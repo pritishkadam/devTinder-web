@@ -12,6 +12,7 @@ import { BASE_URL } from '../utils/constants';
 import axios from 'axios';
 import { removeUser } from '../store/userSlice';
 import Requests from './Requests/Requests';
+import { createSocketConnection } from '../utils/socket';
 
 const SideBar = () => {
   const userData = useSelector((store) => store.user.userDetails);
@@ -38,30 +39,32 @@ const SideBar = () => {
 
   return (
     <>
-      <div className='hidden md:block md:w-[35rem] md:h-screen md:bg-base-300 md:overflow-y-auto'>
-        <header className='w-full py-6 bg-gradient-to-tr from-[#fd267a] to-[#ff6036] flex justify-between items-center px-4 sticky top-0 z-10'>
+      <div className='hidden md:block md:w-[28rem] md:h-screen md:bg-base-300 md:overflow-y-auto'>
+        <header className='w-full h-20 bg-gradient-to-tr from-[#fd267a] to-[#ff6036] flex justify-between items-center px-2 pr-4 sticky top-0 z-10'>
           <Link
             to={`/profile`}
-            className='btn border-none rounded-full bg-transparent hover:bg-base-300 px-1'
+            className='h-10 border-none rounded-full bg-transparent hover:bg-[#111418cc] px-1 py-1'
           >
-            <div className='flex justify-center items-center gap-2 text-black p-0'>
+            <div className='flex justify-center items-center gap-1 text-black p-0'>
               <img
                 alt='DevTinder Logo'
                 src={photoUrl}
-                className='w-10 rounded-full'
+                className='w-8 rounded-full'
                 onError={({ currentTarget }) => {
                   currentTarget.onerror = null;
                   currentTarget.src = defaultUserIcon;
                 }}
               />
-              <span className='text-xl mx-2 text-white'>{firstName}</span>
+              <span className='text-base mx-2 text-white font-semibold'>
+                {firstName}
+              </span>
             </div>
           </Link>
           <div className='flex gap-4'>
             <Link
               to={'/explore'}
               title='Explore'
-              className='w-10 h-10 rounded-full border bg-slate-200 cursor-pointer'
+              className='w-8 h-8 rounded-full border bg-slate-200 cursor-pointer hover:border-slate-700'
             >
               <img
                 alt='explore'
@@ -76,7 +79,7 @@ const SideBar = () => {
             <button
               onClick={handleLogout}
               title='Logout'
-              className='w-10 h-10 rounded-full border bg-slate-200 cursor-pointer'
+              className='w-8 h-8 rounded-full border bg-slate-200 cursor-pointer hover:border-slate-700'
             >
               <img
                 alt='logout'
@@ -95,11 +98,11 @@ const SideBar = () => {
             type='radio'
             name='my_tabs_1'
             role='tab'
-            className='tab mr-2 text-xl font-bold border-0 border-b-red-600'
+            className='tab mr-2 text-md font-bold border-0 border-b-red-600 mx-2'
             aria-label='Matches'
             defaultChecked
           />
-          <div role='tabpanel' className='tab-content pt-3 pr-2'>
+          <div role='tabpanel' className='tab-content pt-3'>
             <MatchList />
           </div>
 
@@ -107,29 +110,18 @@ const SideBar = () => {
             type='radio'
             name='my_tabs_1'
             role='tab'
-            className='tab mr-2 text-xl font-bold border-0 border-b-red-600'
-            aria-label='Messages'
-          />
-          <div role='tabpanel' className='tab-content pt-3 pr-2'>
-            <Messages />
-          </div>
-
-          <input
-            type='radio'
-            name='my_tabs_1'
-            role='tab'
-            className='tab mr-2 text-xl font-bold border-0 border-b-red-600'
+            className='tab mr-2 text-md font-bold border-0 border-b-red-600'
             aria-label='Requests'
           />
-          <div role='tabpanel' className='tab-content pt-3 pr-2'>
+          <div role='tabpanel' className='tab-content pt-3'>
             <Requests />
           </div>
         </div>
       </div>
-      <div className='md:hidden w-full h-16 z-10 bg-gradient-to-tr from-[#fd267a] to-[#ff6036] fixed bottom-0 flex justify-evenly items-center'>
+      <div className='md:hidden w-full h-10 z-10 bg-gradient-to-tr from-[#fd267a] to-[#ff6036] fixed bottom-0 flex justify-evenly items-center'>
         <Link
           to={'/explore'}
-          className='w-10 h-10 rounded-full border bg-slate-200 cursor-pointer'
+          className='w-8 h-8 rounded-full border bg-slate-200 cursor-pointer hover:border-black'
         >
           <img
             alt='explore'
@@ -144,7 +136,7 @@ const SideBar = () => {
         </Link>
         <Link
           to={'/requests'}
-          className='w-10 h-10 rounded-full border bg-slate-200 cursor-pointer'
+          className='w-8 h-8 rounded-full border bg-slate-200 cursor-pointer  hover:border-black'
           title='Requests'
         >
           <img
@@ -158,8 +150,8 @@ const SideBar = () => {
           />
         </Link>
         <Link
-          to={'/connections'}
-          className='w-10 h-10 rounded-full border bg-slate-200 cursor-pointer'
+          to={'/matches'}
+          className='w-8 h-8 rounded-full border bg-slate-200 cursor-pointer hover:border-black'
           title='Connections'
         >
           <img
@@ -173,23 +165,8 @@ const SideBar = () => {
           />
         </Link>
         <Link
-          to={'/messages'}
-          className='w-10 h-10 rounded-full border bg-slate-200 cursor-pointer'
-          title='Messages'
-        >
-          <img
-            alt='messages'
-            src={messageIcon}
-            className='w-8 mx-1 my-1 rounded-full'
-            onError={({ currentTarget }) => {
-              currentTarget.onerror = null;
-              currentTarget.src = defaultUserIcon;
-            }}
-          />
-        </Link>
-        <Link
           to={'/profile'}
-          className='w-10 h-10 rounded-full border bg-slate-200 cursor-pointer'
+          className='w-8 h-8 rounded-full border bg-slate-200 cursor-pointer hover:border-black'
           title='Profile'
         >
           <img
@@ -202,6 +179,17 @@ const SideBar = () => {
             }}
           />
         </Link>
+        <button
+          onClick={handleLogout}
+          title='Logout'
+          className='w-8 h-8 rounded-full border bg-slate-200 cursor-pointer hover:border-black'
+        >
+          <img
+            alt='logout'
+            src={logoutIcon}
+            className='w-full rounded-full p-1'
+          />
+        </button>
       </div>
     </>
   );

@@ -7,9 +7,23 @@ import refresh from './../../assets/refreshIcon.png';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../../utils/constants';
+import { useDispatch } from 'react-redux';
+import { removeFeed } from '../../store/feedSlice';
+import AlertComponent from '../AlertComponent';
+import FeedCardError from './FeedCardError';
+import FeedCardSkeleton from './FeedCardSkeleton';
+
+const buttonAction = {
+  INTERESTED: 'interested',
+  REFRESH: 'refresh',
+  IGNORED: 'ignored',
+};
 
 const DetailedFeedCard = () => {
   const { profileId } = useParams();
+  const dispatch = useDispatch();
+  const [errorMessage, setErrorMessage] = useState('');
+
   const [userDetails, setUserDetails] = useState({
     fetching: false,
     error: false,
@@ -42,6 +56,21 @@ const DetailedFeedCard = () => {
     }
   };
 
+  const updateConnectionRequest = async (userId, action) => {
+    try {
+      const API_URL = `${BASE_URL}/request/send/${action}/${userId}`;
+      const { error, data } = await axios.post(API_URL, null, {
+        withCredentials: true,
+      });
+      if (error || data.error) {
+        throw new Error(data.errorMessage);
+      }
+      dispatch(removeFeed({ id: userId }));
+    } catch (error) {
+      setErrorMessage('Something went wrong! Try again in sometime.');
+    }
+  };
+
   useEffect(() => {
     setUserDetails({
       error: false,
@@ -52,17 +81,38 @@ const DetailedFeedCard = () => {
     fetchUserDetails();
   }, []);
 
+  useEffect(() => {
+    if (errorMessage) {
+      setTimeout(() => {
+        setErrorMessage('');
+      }, [3000]);
+    }
+  }, [errorMessage]);
+
+  const handleAction = (userId, action) => {
+    if (action) {
+      if (
+        action === buttonAction.INTERESTED ||
+        action === buttonAction.IGNORED
+      ) {
+        updateConnectionRequest(userId, action);
+      }
+    }
+  };
+
   return (
     <>
       {userDetails.data && (
         <div className='w-full h-screen mx-auto flex justify-center overflow-y-scroll'>
-          <div className='w-[26rem] h-[82vh] sm:h-[98vh] bg-base-300 relative overflow-y-auto mb-1 rounded-b-xl shadow-lg shadow-indigo-300/40'>
-            <div className='w-full h-20 bg-base-300 text-white flex justify-between py-2 px-4 sticky top-0'>
-              <p className='text-4xl font-bold my-2'>
-                {userDetails.data.firstName}{' '}
-                <span className='text-3xl font-semibold'>
-                  {userDetails.data.age}
-                </span>
+          <div className='w-[22rem] h-[85vh] sm:h-[90vh] bg-base-300 relative overflow-y-auto mb-1 rounded-xl shadow-lg shadow-indigo-300/40'>
+            <div className='w-full h-16 bg-black text-white flex justify-between py-2 px-4 sticky top-0'>
+              <p className='text-4xl font-bold'>
+                {userDetails.data.firstName}
+                {userDetails?.data?.age && (
+                  <span className='text-3xl font-semibold'>
+                    , {userDetails.data.age}
+                  </span>
+                )}
               </p>
               <Link
                 to={`/explore`}
@@ -77,43 +127,44 @@ const DetailedFeedCard = () => {
                   src={userDetails.data.photoUrl}
                   className='h-full'
                   onError={({ currentTarget }) => {
-                    console.log('CurrentTarget: ', currentTarget);
                     currentTarget.onerror = null;
                     currentTarget.src = defaultUserIcon;
                   }}
                 />
               </div>
-              <div className='h-48 bg-base-300 mt-4 my-2 rounded-2xl p-6 overflow-y-scroll'>
-                <p className='text-2xl font-medium mb-2'>Essentials</p>
-                {userDetails.data.about && (
+              {userDetails?.data?.about && (
+                <div className='h-48 bg-base-300 mt-4 my-2 rounded-2xl p-6 overflow-y-scroll mx-1'>
+                  <p className='text-2xl font-medium mb-2'>Essentials</p>
                   <p className='text-base font-medium text-wrap'>
                     {`${userDetails.data.about.substring(0, 150)}`}
                   </p>
-                )}
-              </div>
-              <div className='h-48 bg-base-300 mb-2 rounded-2xl p-6 overflow-y-scroll'>
-                <p className='text-2xl font-medium mb-2'> About me</p>
-                {userDetails.data.about && (
-                  <p className='text-base font-medium text-wrap'>
-                    {`${userDetails.data.about.substring(0, 150)}`}
-                  </p>
-                )}
-              </div>
-              <div className='h-52 bg-base-300 rounded-2xl p-6 overflow-y-scroll'>
-                <p className='text-2xl font-medium mb-2'>Skills</p>
-                <div className='my-4'>
-                  {userDetails.data.skills &&
-                    userDetails.data.skills.map((element, index) => (
-                      <span
-                        key={index}
-                        className='p-2 rounded-full bg-slate-400 cursor-pointer mx-1'
-                      >
-                        {element}
-                      </span>
-                    ))}
                 </div>
-              </div>
-              <div className='my-10 gap-4 mb-32'>
+              )}
+              {userDetails.data.about && (
+                <div className='h-48 bg-base-300 mb-2 rounded-2xl p-6 overflow-y-scroll mx-1'>
+                  <p className='text-2xl font-medium mb-2'> About me</p>
+                  <p className='text-base font-medium text-wrap'>
+                    {`${userDetails.data.about.substring(0, 150)}`}
+                  </p>
+                </div>
+              )}
+              {userDetails.data.skills &&
+                userDetails.data.skills.length !== 0 && (
+                  <div className='h-52 bg-base-300 rounded-2xl p-6 overflow-y-scroll mx-1'>
+                    <p className='text-2xl font-medium mb-2'>Skills</p>
+                    <div className='my-4'>
+                      {userDetails.data.skills.map((element, index) => (
+                        <span
+                          key={index}
+                          className='p-2 rounded-full bg-slate-400 cursor-pointer mx-1'
+                        >
+                          {element}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              <div className='my-10 mx-4 gap-4'>
                 <button className='btn w-full mb-6 text-lg font-medium'>
                   Block {userDetails.data.firstName}
                 </button>
@@ -124,30 +175,33 @@ const DetailedFeedCard = () => {
               <br />
             </div>
           </div>
-          <div className='w-96 h-auto fixed bottom-20 sm:bottom-10 flex justify-around items-center'>
+          <div className='w-[22rem] h-auto fixed bottom-16 sm:bottom-10 flex justify-around items-center'>
             <button
-              className='w-20 h-20 rounded-full bg-base-100 text-white hover:scale-125 hover:bg-base-200 hover:text-white'
+              className='w-16 h-16 border border-slate-700 rounded-full bg-base-100 text-white hover:scale-125 hover:bg-base-200 hover:text-white'
               title='Pass'
+              onClick={() => {
+                handleAction(profileId, buttonAction.IGNORED);
+              }}
             >
-              <img src={cross} className='w-10 mx-auto' />
+              <img src={cross} className='w-8 mx-auto' />
             </button>
             <button
-              className='w-16 h-16 rounded-full bg-base-100 text-white hover:scale-125 hover:bg-base-200 hover:text-white'
-              title='Refresh'
-            >
-              <img src={refresh} className='w-10 mx-auto p-1' />
-            </button>
-            <button
-              className='w-20 h-20 rounded-full bg-base-100 text-white hover:scale-125 hover:bg-base-200 hover:text-white'
+              className='w-16 h-16 border border-slate-700 rounded-full bg-base-100 text-white hover:scale-125 hover:bg-base-200 hover:text-white'
               title='Send Request'
+              onClick={() => {
+                handleAction(profileId, buttonAction.INTERESTED);
+              }}
             >
-              <img src={accept} className='w-10 mx-auto' />
+              <img src={accept} className='w-8 mx-auto' />
             </button>
           </div>
         </div>
       )}
-      {userDetails.error && <div>Error</div>}
-      {userDetails.fetching && <div>fetching</div>}
+      {userDetails.error && <FeedCardError />}
+      {userDetails.fetching && <FeedCardSkeleton />}
+      {errorMessage && (
+        <AlertComponent message={errorMessage} alertType={'error'} />
+      )}
     </>
   );
 };

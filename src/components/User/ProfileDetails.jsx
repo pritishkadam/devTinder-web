@@ -4,6 +4,8 @@ import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from './../../utils/constants';
+import FeedCardError from '../Explore/FeedCardError';
+import FeedCardSkeleton from '../Explore/FeedCardSkeleton';
 
 const ProfileDetails = () => {
   const { profileId } = useParams();
@@ -52,17 +54,19 @@ const ProfileDetails = () => {
   return (
     <div className='w-full h-screen mx-auto flex justify-center overflow-y-scroll'>
       {userDetails.data && (
-        <div className='w-[26rem] h-[82vh] sm:h-[98vh] bg-base-300 relative overflow-y-auto mb-1 rounded-b-xl shadow-lg shadow-indigo-300/40'>
-          <div className='w-full h-20 bg-base-300 text-white flex justify-between py-2 px-4 sticky top-0'>
-            <p className='text-4xl font-bold my-2'>
-              {userDetails.data.firstName}{' '}
-              <span className='text-3xl font-semibold'>
-                {userDetails.data.age}
-              </span>
+        <div className='w-[22rem] h-[85vh] sm:h-[90vh] bg-base-300 relative overflow-y-auto mb-1 rounded-xl shadow-lg shadow-indigo-300/40'>
+          <div className='w-full h-16 bg-black text-white flex justify-between py-2 px-4 sticky top-0'>
+            <p className='text-4xl font-bold'>
+              {userDetails.data.firstName}
+              {userDetails?.data?.age && (
+                <span className='text-3xl font-semibold'>
+                  , {userDetails.data.age}
+                </span>
+              )}
             </p>
             <Link
               to={`/profile`}
-              className='w-8 h-8 rounded-full border bg-black hover:scale-110 my-auto px-1 py-1'
+              className='w-8 h-8 rounded-full border bg-black hover:scale-110 my-auto p-1'
             >
               <img src={down} className='w-8 object-contain' />
             </Link>
@@ -79,7 +83,7 @@ const ProfileDetails = () => {
               />
             </div>
             {userDetails.data.about && (
-              <div className='h-48 bg-base-300 mt-4 my-2 rounded-2xl p-6 overflow-y-scroll'>
+              <div className='h-48 bg-base-300 mt-4 my-2 rounded-2xl p-6 overflow-y-scroll mx-1'>
                 <p className='text-2xl font-medium mb-2'>Essentials</p>
                 <p className='text-base font-medium text-wrap'>
                   {`${userDetails.data.about.substring(0, 150)}`}
@@ -87,21 +91,21 @@ const ProfileDetails = () => {
               </div>
             )}
             {userDetails.data.about && (
-              <div className='h-48 bg-base-300 mb-2 rounded-2xl p-6 overflow-y-scroll'>
+              <div className='h-48 bg-base-300 mb-2 rounded-2xl p-6 overflow-y-scroll mx-1'>
                 <p className='text-2xl font-medium mb-2'> About me</p>
                 <p className='text-base font-medium text-wrap'>
                   {`${userDetails.data.about.substring(0, 150)}`}
                 </p>
               </div>
             )}
-            <div className='h-52 bg-base-300 rounded-2xl p-6 overflow-y-scroll'>
+            <div className='h-52 bg-base-300 rounded-2xl p-6 overflow-y-scroll mx-1'>
               <p className='text-2xl font-medium mb-2'>Skills</p>
-              <div className='my-4'>
+              <div className='my-4 flex flex-wrap overflow-scroll'>
                 {userDetails.data.skills &&
                   userDetails.data.skills.map((element, index) => (
                     <span
                       key={index}
-                      className='p-2 rounded-full bg-slate-400 cursor-pointer mx-1'
+                      className='p-2 rounded-full bg-slate-400 cursor-pointer m-1'
                     >
                       {element}
                     </span>
@@ -112,8 +116,8 @@ const ProfileDetails = () => {
           </div>
         </div>
       )}
-      {userDetails.error && <div>Error</div>}
-      {userDetails.fetching && <div>fetching</div>}
+      {userDetails.error && <FeedCardError />}
+      {userDetails.fetching && <FeedCardSkeleton />}
     </div>
   );
 };

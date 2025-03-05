@@ -3,7 +3,7 @@ import skillSet from '../../enums/skills';
 import axios from 'axios';
 import { BASE_URL } from '../../utils/constants';
 import { saveUser } from '../../store/userSlice';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 const SignUpForm = (props) => {
@@ -49,14 +49,14 @@ const SignUpForm = (props) => {
       data: undefined,
     });
     try {
-      const form = new FormData();
-      const formKeys = Object.keys(formData);
-      formKeys.map((key) => {
-        form.append([key], formData[key]);
-      });
+      // const form = new FormData();
+      // const formKeys = Object.keys(formData);
+      // formKeys.map((key) => {
+      //   form.append([key], formData[key]);
+      // });
       const { error, data } = await axios.post(API_URL, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       });
@@ -368,11 +368,21 @@ const SignUpForm = (props) => {
             </label>
             <label className='form-control w-full max-w-xs mx-auto'>
               <input
-                type='file'
+                type='text'
                 name='photoUrl'
-                onChange={handleFileChange}
+                placeholder='Enter Image URL'
+                onChange={handleFormChange}
+                value={formData.photoUrl}
                 required
+                className='input input-bordered w-full max-w-xs'
               />
+            </label>
+            <label className='form-control w-full max-w-xs mx-auto'>
+              <div className='label'>
+                <span className='label-text text-xs'>
+                  NOTE: You have to add an Image URL here
+                </span>
+              </div>
             </label>
           </div>
         )}
