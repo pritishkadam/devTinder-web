@@ -122,38 +122,53 @@ const MatchDetails = () => {
             </p>
           </div>
           <div className='w-full h-auto bg-black'>
-            <div className='bg-base-300 h-[80%]'>
+            <div className='bg-base-300 h-[80%] mx-auto'>
               <img
                 src={userDetails.data.photoUrl}
-                className='h-full'
+                className='h-full mx-auto'
                 onError={({ currentTarget }) => {
                   currentTarget.onerror = null;
                   currentTarget.src = defaultUserIcon;
                 }}
               />
             </div>
-            {userDetails.data.about && (
-              <div className='h-48 bg-base-300 mt-4 my-2 rounded-2xl p-6 overflow-y-scroll mx-1'>
+            <div className='h-48 bg-base-300 mt-4 my-2 rounded-2xl p-6 overflow-y-scroll mx-1'>
                 <p className='text-2xl font-medium mb-2'>Essentials</p>
-                <p className='text-base font-medium text-wrap'>
-                  {`${userDetails.data.about.substring(0, 150)}`}
-                </p>
+                {userDetails.data.firstName && userDetails.data.lastName && (
+                  <p className='text-base font-medium text-wrap'>
+                    Name:{' '}
+                    {`${userDetails.data.firstName} ${userDetails.data.lastName}`}
+                  </p>
+                )}
+                {userDetails.data.age && (
+                  <p className='text-base font-medium text-wrap'>
+                    Age: {`${userDetails.data.age}`}
+                  </p>
+                )}
+                {userDetails.data.gender && (
+                  <p className='text-base font-medium text-wrap'>
+                    Gender: {`${userDetails.data.gender}`}
+                  </p>
+                )}
+                {userDetails.data.role && (
+                  <p className='text-base font-medium text-wrap'>
+                    Role: {`${userDetails.data.role}`}
+                  </p>
+                )}
               </div>
-            )}
-            {userDetails.data.about && (
-              <div className='h-48 bg-base-300 mb-2 rounded-2xl p-6 overflow-y-scroll mx-1'>
-                <p className='text-2xl font-medium mb-2'> About me</p>
-                <p className='text-base font-medium text-wrap'>
-                  {`${userDetails.data.about.substring(0, 150)}`}
-                </p>
-              </div>
-            )}
-            {userDetails.data.skills &&
-              userDetails?.data?.skills?.length !== 0 && (
-                <div className='h-52 bg-base-300 rounded-2xl p-6 overflow-y-scroll mx-1'>
-                  <p className='text-2xl font-medium mb-2'>Skills</p>
-                  <div className='my-4 flex flex-wrap overflow-scroll'>
-                    {userDetails.data.skills.map((element, index) => (
+              {userDetails.data.about && (
+                <div className='h-48 bg-base-300 mb-2 rounded-2xl p-6 overflow-y-scroll mx-1'>
+                  <p className='text-2xl font-medium mb-2'> About me</p>
+                  <p className='text-base font-medium text-wrap'>
+                    {`${userDetails.data.about.substring(0, 150)}`}
+                  </p>
+                </div>
+              )}
+              <div className='h-52 bg-base-300 rounded-2xl p-6 overflow-y-scroll mx-1'>
+                <p className='text-2xl font-medium mb-2'>Skills</p>
+                <div className='my-4 flex flex-wrap overflow-scroll'>
+                  {userDetails.data.skills &&
+                    userDetails.data.skills.map((element, index) => (
                       <span
                         key={index}
                         className='p-2 rounded-full bg-slate-400 cursor-pointer m-1'
@@ -161,9 +176,8 @@ const MatchDetails = () => {
                         {element}
                       </span>
                     ))}
-                  </div>
                 </div>
-              )}
+              </div>
             <br />
             <div className='mx-4 gap-4'>
               <button

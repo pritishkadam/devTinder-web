@@ -11,6 +11,7 @@ import AlertComponent from '../AlertComponent';
 import EmptyFeedCard from './EmptyFeedCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFeed, removeFeed } from '../../store/feedSlice';
+import { useNavigate } from 'react-router-dom';
 
 const buttonAction = {
   INTERESTED: 'interested',
@@ -21,6 +22,7 @@ const buttonAction = {
 const Explore = () => {
   const feed = useSelector((store) => store.feed.feedData);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const [profileList, setProfileList] = useState({
     fetching: false,
@@ -102,6 +104,7 @@ const Explore = () => {
         action === buttonAction.IGNORED
       ) {
         updateConnectionRequest(userId, action);
+        navigate('/explore');
       } else if (action === buttonAction.REFRESH) {
         shuffleProfiles();
       }

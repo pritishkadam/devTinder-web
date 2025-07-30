@@ -13,12 +13,20 @@ import axios from 'axios';
 import { removeUser } from '../store/userSlice';
 import Requests from './Requests/Requests';
 import { createSocketConnection } from '../utils/socket';
+import LogoutConfirmation from './User/LogoutConfirmation';
+import { useState } from 'react';
 
 const SideBar = () => {
   const userData = useSelector((store) => store.user.userDetails);
   const { firstName, photoUrl } = userData;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [showLogout, setShowLogout] = useState(false);
+
+  const handleCancel = () => {
+    setShowLogout(false);
+  };
 
   const handleLogout = async () => {
     try {
@@ -29,6 +37,7 @@ const SideBar = () => {
       if (error || data.error) {
         throw new Error('Something went wrong!');
       }
+      setShowLogout(false);
       localStorage.removeItem('token');
       dispatch(removeUser());
       navigate('/');
@@ -49,7 +58,7 @@ const SideBar = () => {
               <img
                 alt='DevTinder Logo'
                 src={photoUrl}
-                className='w-8 rounded-full'
+                className='w-7 h-full rounded-full'
                 onError={({ currentTarget }) => {
                   currentTarget.onerror = null;
                   currentTarget.src = defaultUserIcon;
@@ -77,7 +86,7 @@ const SideBar = () => {
               />
             </Link>
             <button
-              onClick={handleLogout}
+              onClick={() => setShowLogout(true)}
               title='Logout'
               className='w-8 h-8 rounded-full border bg-slate-200 cursor-pointer hover:border-slate-700'
             >
@@ -172,7 +181,7 @@ const SideBar = () => {
           <img
             alt='profile-photo'
             src={photoUrl}
-            className='w-full rounded-full'
+            className='w-8 h-8 rounded-full'
             onError={({ currentTarget }) => {
               currentTarget.onerror = null;
               currentTarget.src = defaultUserIcon;
@@ -191,6 +200,11 @@ const SideBar = () => {
           />
         </button>
       </div>
+      <LogoutConfirmation
+        show={showLogout}
+        onConfirm={handleLogout}
+        onCancel={handleCancel}
+      />
     </>
   );
 };

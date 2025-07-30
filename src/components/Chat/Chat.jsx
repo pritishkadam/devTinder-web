@@ -138,7 +138,7 @@ const Chat = () => {
               <img
                 src={connectionDetails.data?.photoUrl}
                 alt='Profile Picture'
-                className='w-10 rounded-full border border-slate-800'
+                className='w-10 h-10 rounded-full border border-slate-800'
                 onError={({ currentTarget }) => {
                   currentTarget.onerror = null;
                   currentTarget.src = defaultUserIcon;

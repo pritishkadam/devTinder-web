@@ -32,7 +32,7 @@ const Profile = () => {
               currentTarget.src = defaultUserIcon;
             }}
           />
-          <div className='w-full absolute bottom-2 px-4 h-20'>
+          <div className='w-full absolute bottom-0 px-4 h-28 bg-black bg-opacity-50 backdrop-blur-sm'>
             <div className='w-full flex justify-between'>
               {firstName && (
                 <p className='text-4xl font-bold my-2'>{firstName}</p>

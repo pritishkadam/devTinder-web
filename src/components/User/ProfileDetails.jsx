@@ -57,7 +57,7 @@ const ProfileDetails = () => {
         <div className='w-[22rem] h-[85vh] sm:h-[90vh] bg-base-300 relative overflow-y-auto mb-1 rounded-xl shadow-lg shadow-indigo-300/40'>
           <div className='w-full h-16 bg-black text-white flex justify-between py-2 px-4 sticky top-0'>
             <p className='text-4xl font-bold'>
-              {userDetails.data.firstName}
+              {userDetails?.data?.firstName}
               {userDetails?.data?.age && (
                 <span className='text-3xl font-semibold'>
                   , {userDetails.data.age}
@@ -72,24 +72,41 @@ const ProfileDetails = () => {
             </Link>
           </div>
           <div className='w-full h-auto bg-black'>
-            <div className='bg-base-300 h-[80%]'>
+            <div className='bg-base-300 h-[80%] mb-2'>
               <img
                 src={userDetails.data.photoUrl}
-                className='h-full'
+                className='h-80 mx-auto'
                 onError={({ currentTarget }) => {
                   currentTarget.onerror = null;
                   currentTarget.src = defaultUserIcon;
                 }}
               />
             </div>
-            {userDetails.data.about && (
-              <div className='h-48 bg-base-300 mt-4 my-2 rounded-2xl p-6 overflow-y-scroll mx-1'>
-                <p className='text-2xl font-medium mb-2'>Essentials</p>
+            <div className='h-48 bg-base-300 mt-4 my-2 rounded-2xl p-6 overflow-y-scroll mx-1'>
+              <p className='text-2xl font-medium mb-2'>Essentials</p>
+              {userDetails.data.firstName && userDetails.data.lastName && (
                 <p className='text-base font-medium text-wrap'>
-                  {`${userDetails.data.about.substring(0, 150)}`}
+                  Name:{' '}
+                  {`${userDetails.data.firstName} ${userDetails.data.lastName}`}
                 </p>
-              </div>
-            )}
+              )}
+              {userDetails.data.age && (
+                <p className='text-base font-medium text-wrap'>
+                  Age: {`${userDetails.data.age}`}
+                </p>
+              )}
+              {userDetails.data.gender && (
+                <p className='text-base font-medium text-wrap'>
+                  Gender: {`${userDetails.data.gender}`}
+                </p>
+              )}
+              {userDetails.data.role && (
+                <p className='text-base font-medium text-wrap'>
+                  Role: {`${userDetails.data.role}`}
+                </p>
+              )}
+            </div>
+
             {userDetails.data.about && (
               <div className='h-48 bg-base-300 mb-2 rounded-2xl p-6 overflow-y-scroll mx-1'>
                 <p className='text-2xl font-medium mb-2'> About me</p>
