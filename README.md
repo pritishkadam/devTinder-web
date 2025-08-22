@@ -1,4 +1,4 @@
-<img width="1365" height="599" alt="image" src="https://github.com/user-attachments/assets/f1c3b0ef-8001-4c67-b828-92b2a92aef38" /># Tinder Clone - Frontend
+   <img width="1365" height="599" alt="image" src="https://github.com/user-attachments/assets/f1c3b0ef-8001-4c67-b828-92b2a92aef38" /># Tinder Clone - Frontend
 
 This project is inspired by an app called "tinder" - a dating application for general public. This application - "devTinder" is developed on similar lines but for fellow developers to connect and interact. This project is built using React.js, React Redux Toolkit, Daisy UI, Tailwind CSS and many other tools.
 
@@ -20,11 +20,11 @@ This project is inspired by an app called "tinder" - a dating application for ge
 
 #### devTinder Profile Details Page
 
-![devTinder_Profile_Details Page.](/devTinder_Profile_Details_Page.png "devTinder Profile_Details Page")
+![devTinder_Profile_Details.](/devTinder_Profile_Details.png "devTinder Profile_Details")
 
 #### devTinder Chat Screen
 
-![devTinder_Chat Page.](/devTinder_Chat_Page.png "devTinder Chat Page")
+![devTinder_Chat.](/devTinder_Chat.png "devTinder Chat")
 
 ## Tools Used
 
