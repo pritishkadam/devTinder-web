@@ -1,4 +1,4 @@
-# Tinder Clone - Frontend
+<img width="1365" height="599" alt="image" src="https://github.com/user-attachments/assets/f1c3b0ef-8001-4c67-b828-92b2a92aef38" /># Tinder Clone - Frontend
 
 This project is inspired by an app called "tinder" - a dating application for general public. This application - "devTinder" is developed on similar lines but for fellow developers to connect and interact. This project is built using React.js, React Redux Toolkit, Daisy UI, Tailwind CSS and many other tools.
 
@@ -14,13 +14,17 @@ This project is inspired by an app called "tinder" - a dating application for ge
 
 ![devTinder Login Page.](/devTinder_Login_Page.png "devTinder Login Page")
 
-#### devTinder Search Page
+#### devTinder Explore Page
 
-![devTinder Search Page.](/devTinder_Search_Page.png "devTinder Search Page")
+![devTinder Explore Page.](/devTinder_Explore_Page.png "devTinder Explore Page")
 
-#### devTinder Cart Page
+#### devTinder Profile Details Page
 
-![devTinder Cart Page.](/devTinder_Cart_Page.png "devTinder Cart Page")
+![devTinder_Profile_Details Page.](/devTinder_Profile_Details_Page.png "devTinder Profile_Details Page")
+
+#### devTinder Chat Screen
+
+![devTinder_Chat Page.](/devTinder_Chat_Page.png "devTinder Chat Page")
 
 ## Tools Used
 
@@ -91,6 +95,6 @@ npm install
 ```
 npm run start
 ```
-5. Open your browser and visit [http://localhost:1234](http://localhost:1234) to see the app running.
+5. Open your browser and visit [http://localhost:5173](http://localhost:5173) to see the app running.
 
 ##### NOTE: In order to experience the full range of features offered by this application, it is essential to install the necessary external dependencies
